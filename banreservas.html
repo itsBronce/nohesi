@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Estilo Banreservas con Slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:'Courier New', Courier, monospace;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #000000;
+            border-bottom: 2px solid #000000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #210036;
+            padding: 0 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            position: relative;
+            padding: 15px 20px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li:hover {
+            background-color: #4a0e58;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f0f0f0;
+        }
+
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 250px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        nav ul li:hover > ul {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav ul li ul div {
+            margin-bottom: 15px;
+        }
+
+        nav ul li ul div h4 {
+            color: #0078b8;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        nav ul li ul a {
+            display: block;
+            padding: 5px 0;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li ul a:hover {
+            color: #0078b8;
+        }
+
+        .view-all {
+            padding-top: 10px;
+            display: block;
+            color: #ff6600;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .view-all:hover {
+            color: #ff8533;
+        }
+
+        .slider-container {
+            width: 100%; 
+            height: 700px; 
+            margin: 0px auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider img {
+            width: 100%;
+            object-fit: cover; 
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 10px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .next {
+            right: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .content {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #fff;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 12px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .content h2 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .content p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+        }
+
+        .feature {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .feature img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #210036;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 14px 40px;
+            background-color: #210036;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #4a0e58;
+            transform: translateY(-3px);
+        }
+
+
+
+        footer {
+            margin-top: auto;
+            background-color: #000;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer .footer-logo img {
+            height: 40px;
+        }
+
+        footer .copyright {
+            text-align: center;
+            flex-grow: 1;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="logoNicolax.png" alt="Logo">
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">CARS</a>
+                <ul>
+                    <div>
+                        <h4>CARS RELEASES</h4>
+                        <a href="#">MERCEDES-BENZ BRABUS GT600</a>
+                        <a href="#">MITSUBISHI 3000GT</a>
+                        <a href="#">MCLAREN 720S</a>
+                        <a href="#">BM2 M2 G87</a>
+                        <a href="#">BRABUS 900 ROCKET R</a>
+                        <a href="#">BENTLEY CONTINENTAL GT</a>
+                        <a href="#" class="view-all">SEE ALL</a>
+                    </div>
+                    <div>
+                        <h4>ALMOST FINISHED</h4>
+                        <a href="#">LEXUS LFA</a>
+                        <a href="#">TOYOTA GR SUPRA A90</a>
+                        <a href="#" class="view-all">SEE ALL</a>
+                    </div>
+                </ul>
+            </li>
+            <li><a href="#">SHOP</a></li>
+            <li><a href="#">ABOUT US</a></li>
+            <li><a href="#">PARTNERS</a></li>
+            <li><a href="#">CONTACT</a></li>
+            <li><a href="#">SERVERS</a></li>
+        </ul>
+    </nav>
+
+    <div class="slider-container">
+        <div class="slider" id="slider">
+            <img src="slide1.png" alt="Imagen 1">
+            <img src="slide2.png" alt="Imagen 2">
+            <img src="slide3.png" alt="Imagen 3">
+            <img src="slide4.png" alt="Imagen 4">
+            <img src="slide5.png" alt="Imagen 5">
+            <img src="slide6.png" alt="Imagen 6">
+            <img src="slide7.png" alt="Imagen 7">
+            <img src="slide8.png" alt="Imagen 8">
+            <img src="slide9.png" alt="Imagen 9">
+            <img src="slide10.png" alt="Imagen 10">
+        </div>
+        <button class="prev" onclick="prevSlide()">&#10094;</button>
+        <button class="next" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to the Future of Luxury Cars</h2>
+        <p>Step into a world where innovation meets elegance. Discover our exclusive collection of high-performance vehicles that redefine the driving experience. Engineered to perfection, each model showcases cutting-edge technology and unparalleled craftsmanship.</p>
+        
+        <div class="features">
+            <div class="feature">
+                <img src="divIMG1.jpg" alt="Performance">
+                <h3>High Performance</h3>
+                <p>Experience speed and precision with our top-tier models that deliver power beyond expectations.</p>
+            </div>
+            <div class="feature">
+                <img src="divIMG2.jpg" alt="Design">
+                <h3>Exquisite Design</h3>
+                <p>Our cars combine sleek, modern design with luxurious interiors for the ultimate in style and comfort.</p>
+            </div>
+            <div class="feature">
+                <img src="divIMG3.jpg" alt="Innovation">
+                <h3>Advanced Technology</h3>
+                <p>Featuring the latest technological advancements, our vehicles ensure a seamless driving experience.</p>
+            </div>
+        </div>
+        
+        <a href="#" class="cta-button">Explore Our Collection</a>
+    </div>
+    
+    
+
+    <footer>
+        <div class="footer-logo">
+            <img src="logoNicolax.png" alt="Logo">
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Nicolax Luciano 100589315. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentIndex = 0;
+        const totalImages = document.querySelectorAll('#slider img').length;
+        const slider = document.getElementById('slider');
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalImages;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        setInterval(nextSlide, 5000);
+    </script>
+
+</body>
+</html>
